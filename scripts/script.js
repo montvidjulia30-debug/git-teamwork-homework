@@ -1,5 +1,7 @@
 window.addEventListener('load', function () {
 
+    //changes in dev-2
+
     const fullName = document.getElementById('fullName');
     const userName = document.getElementById('username');
     const email = document.getElementById('email');
