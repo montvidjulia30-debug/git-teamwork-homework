@@ -173,5 +173,12 @@ window.addEventListener('load', function () {
     console.log("изменения в main");
 
     console.log("Сообщение от первого разработчика");
+
+    console.log("Сообщение от второго разработчика");
+    console.log("Вторая версия разработчика");
+
+    console.log("Message from developer two");
+
+    console.log("Сообщение из первой копии для проверки конфликта");
 })
 
