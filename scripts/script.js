@@ -18,7 +18,7 @@ window.addEventListener('load', function () {
     const userNameInput = document.getElementById('username');
 
 
-    const formDescription=document.getElementById('form-description');
+    const formDescription = document.getElementById('form-description');
 
 
     const popUp = document.getElementById('popUp');
@@ -53,7 +53,7 @@ window.addEventListener('load', function () {
     const button = document.getElementById('signUpBtn');
     button.addEventListener('click', checkRegistration)
 
-    function checkRegistration(){
+    function checkRegistration() {
 
         if (!fullName.value.trim()) {
             alert('Заполните поле Full name');
@@ -69,7 +69,7 @@ window.addEventListener('load', function () {
             alert('Заполните поле E-mail');
             return;
         }
-        if(!email.checkValidity()){
+        if (!email.checkValidity()) {
             alert('Заполните корректно поле E-mail');
             return;
         }
@@ -84,7 +84,7 @@ window.addEventListener('load', function () {
             return;
         }
 
-        if (password.value!== repeatPassword.value) {
+        if (password.value !== repeatPassword.value) {
             alert('Пароли не совпадают');
             return;
         }
@@ -99,13 +99,13 @@ window.addEventListener('load', function () {
 
     }
 
-    function showSuccessPopUp(){
+    function showSuccessPopUp() {
         //popUp.style.display='flex';
         popUp.classList.add('d-flex');
 
         const okButton = document.getElementById('okBtn');
-        okButton.addEventListener('click', function (){
-           // popUp.style.display='none';
+        okButton.addEventListener('click', function () {
+            // popUp.style.display='none';
             popUp.classList.remove('d-flex');
             document.getElementById('registrationForm').reset();
             showLogin();
@@ -137,13 +137,9 @@ window.addEventListener('load', function () {
             checkboxGroup.remove();
         }
 
-        if(formDescription!==null){
+        if (formDescription !== null) {
             formDescription.remove()
         }
-
-
-
-
 
 
         const button = document.getElementById('signUpBtn');
@@ -174,6 +170,6 @@ window.addEventListener('load', function () {
         }
     }
 
-
+    console.log("изменения в main");
 })
 
