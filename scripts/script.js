@@ -173,5 +173,6 @@ window.addEventListener('load', function () {
     console.log("изменения в main");
 
     console.log("Сообщение от первого разработчика");
+console.log("Сообщение от второго разработчика");
 })
 
