@@ -94,93 +94,64 @@ window.addEventListener('load', function () {
         checkboxGroup.classList.remove('error');
 
 
+          function showError(input, errorElement, message) {
+              isValid = false;
+              errorElement.textContent += message;
+              input.classList.add('error');
+          }
+
+          if (!fullName.value.trim()) {
+              showError(fullName, errorMsg, "Put the full name");
+          } else if (!/^[A-Za-z ]+$/.test(fullName.value)) {
+             showError(fullName, errorMsg, "Full name can contain only letters and spaces ");
+          }
+
+          if (!userName.value.trim()) {
+              showError(userName, userNameErrorMsg, "Put your username");
+          } else if (!/^[A-Za-z0-9_-]+$/.test(userName.value)) {
+              showError(userName, userNameErrorMsg, "Username can contain only letters, numbers, underscores and hyphens");
+          }
+
+          if (!email.value.trim()) {
+              showError(email, emailInputErrorMsg, "Put your e-mail");
+
+          } else if (email.value.trim() && !/^[A-Za-z0-9._-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}$/.test(email.value)) {
+              showError(email, emailInputErrorMsg, "Please enter a valid email address (e.g. name@example.com).");
+          }
+
+          if (!password.value.trim()) {
+              showError(password, passwordInputErrorMsg, "Put the password");
+          } else {
+
+              if (password.value.length < 8) {
+                  showError(password, passwordInputErrorMsg, "Password must contain at least 8 characters.");
+              }
+
+              if (!/[A-Z]/.test(password.value)) {
+                  showError(password, passwordInputErrorMsg, ' Password must contain at least one uppercase letter.');
+
+              }
+
+              if (!/[0-9]/.test(password.value)) {
+                  showError(password, passwordInputErrorMsg, ' Password must contain at least one number');
+              }
+
+              if (!/[!@#$%^&*]/.test(password.value)) {
+                  showError(password, passwordInputErrorMsg, ' Password must contain at least one special character (!@#$%^&*)');
+              }
 
 
-        if (!fullName.value.trim()) {
-            isValid = false;
-            errorMsg.textContent = "Put the full name";
-            fullName.classList.add('error');
-        }
-
-        if (!/^[A-Za-z ]+$/.test(fullName.value)){
-            isValid = false;
-            errorMsg.textContent = "Full name can contain only letters and spaces ";
-            fullName.classList.add('error');
-        }
-
-        if (!userName.value.trim()) {
-            isValid = false;
-            userNameErrorMsg.textContent = "Put your username";
-            userName.classList.add('error');
-        }
-
-        if(!/^[A-Za-z0-9_-]+$/.test(userName.value)){
-            isValid = false;
-            userNameErrorMsg.textContent = "Username can contain only letters, numbers, underscores and hyphens";
-            userName.classList.add('error');
-
-        }
-
-        if (!email.value.trim()) {
-            isValid = false;
-            emailInputErrorMsg.textContent = "Put your e-mail";
-            email.classList.add('error');
-        }
-          if (email.value.trim() && !/^[A-Za-z0-9._-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}$/.test(email.value)) {
-            isValid= false;
-            emailInputErrorMsg.textContent = "Please enter a valid email address (e.g. name@example.com).";
-            email.classList.add('error');
-        }
-
-
-        if (!password.value.trim()) {
-            isValid = false;
-            passwordInputErrorMsg.textContent = "Put the password";
-            password.classList.add('error');
-        }
-
-        if (password.value.trim() && password.value.length < 8){
-            isValid= false;
-        passwordInputErrorMsg.textContent = "Password must contain at least 8 characters.";
-        password.classList.add('error');
-        }
-
-        if (password.value.trim() && !/[A-Z]/.test(password.value)){
-            isValid=false;
-            passwordInputErrorMsg.textContent += ' Password must contain at least one uppercase letter.';
-            password.classList.add('error');
-        }
-
-        if (password.value.trim() && !/[0-9]/.test(password.value)){
-            isValid=false;
-            passwordInputErrorMsg.textContent += ' Password must contain at least one number';
-            password.classList.add('error');
-        }
-
-        if (password.value.trim() && !/[!@#$%^&*]/.test(password.value)){
-            isValid=false;
-            passwordInputErrorMsg.textContent += ' Password must contain at least one special character (!@#$%^&*)';
-            password.classList.add('error');
-        }
-
-
-        if (password.value.trim() && password.value !== repeatPassword.value){
-            isValid = false;
-            repeatPasswordInputErrorMsg.textContent = ' The passwords do not match';
-            repeatPassword.classList.add('error');
-        }
+              if (password.value !== repeatPassword.value) {
+                  showError(repeatPassword, repeatPasswordInputErrorMsg, ' The passwords do not match');
+              }
+          }
 
         if (!repeatPassword.value.trim()) {
-            isValid= false;
-            repeatPasswordInputErrorMsg.textContent= ' Please repeat your password';
-            repeatPassword.classList.add('error');
+            showError(repeatPassword, repeatPasswordInputErrorMsg, ' Please repeat your password');
         }
 
         if (!checkboxInput.checked) {
-            isValid =false;
-            checkboxInputErrorMsg.textContent= 'Please agree to the Terms of Service and Privacy Policy';
-            checkboxGroup.classList.add('error');
-
+           showError(checkboxGroup, checkboxInputErrorMsg, 'Please agree to the Terms of Service and Privacy Policy');
         }
 
           if (!isValid) {
@@ -232,6 +203,7 @@ window.addEventListener('load', function () {
             fullNameInput.remove();
         }
 
+
         if (emailInput !== null) {
             emailInput.remove();
         }
@@ -263,50 +235,60 @@ window.addEventListener('load', function () {
         button.removeEventListener('click', checkRegistration);
         button.addEventListener('click', checkLogin);
 
-        function checkLogin(event) {
+        userName.classList.remove('error');
+        password.classList.remove('error');
 
-            event.preventDefault();
+        userNameErrorMsg.textContent = '';
+        passwordInputErrorMsg.textContent = '';
 
-            if (!password.value.trim()) {
-                passwordInputErrorMsg.textContent = 'Заполните поле Password!';
-                password.classList.add('error');
-                return;
-            }
-            if (!userName.value.trim()) {
-                userNameErrorMsg.textContent = 'Заполните поле Username!';
-                userName.classList.add('error');
-                return;
-            }
+    }
 
-            const clients = JSON.parse(localStorage.getItem('clients')) || [];
-            const user = clients.find(client => client.userName === userName.value);
-            if (!user) {
-                userNameErrorMsg.textContent = 'Такой пользователь не зарегистрирован';
-                userName.classList.add('error');
-                return;
-            }
 
-            if (user.password !== password.value) {
-                passwordInputErrorMsg.textContent = 'Неверный пароль';
-                password.classList.add('error');
-                return;
-            }
+    function showError(input, errorElement, message){
+        errorElement.textContent = message;
+        input.classList.add('error');
 
-            formTitle.innerText = `Welcome, ${user.fullName}!`;
-            const button = document.getElementById('signUpBtn');
+    }
+    function checkLogin(event) {
 
-            button.innerText = 'Exit';
+        event.preventDefault();
 
-            button.removeEventListener('click', checkLogin);
-            button.addEventListener('click', () => {
-                location.reload();
-            });
-
-            userNameGroup.remove();
-            passwordInput.remove();
-            document.getElementById('login-link-box').remove();
-
+        if (!password.value.trim()) {
+            showError(password, passwordInputErrorMsg, 'Заполните поле Password!');
+            return;
         }
+        if (!userName.value.trim()) {
+           showError(userName, userNameErrorMsg, 'Заполните поле Username!');
+            return;
+        }
+
+        const clients = JSON.parse(localStorage.getItem('clients')) || [];
+        const user = clients.find(client => client.userName === userName.value);
+
+        if (!user) {
+            showError(userName, userNameErrorMsg, 'Такой пользователь не зарегистрирован');
+            return;
+        }
+
+        if (user.password !== password.value) {
+            showError(password, passwordInputErrorMsg,'Неверный пароль');
+            return;
+        }
+
+        formTitle.innerText = `Welcome, ${user.fullName}!`;
+        const button = document.getElementById('signUpBtn');
+
+        button.innerText = 'Exit';
+
+        button.removeEventListener('click', checkLogin);
+        button.addEventListener('click', () => {
+            location.reload();
+        });
+
+        userNameGroup.remove();
+        passwordInput.remove();
+        document.getElementById('login-link-box').remove();
+
     }
 
     console.log("изменения в main");
